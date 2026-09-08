@@ -42,7 +42,7 @@ Primarni ciljevi:
   - Domain: `radivojedjokiccloudoutlook.onmicrosoft.com`
 
 - [x] Proveriti Subscription
-  - Naziv subscription-a: `Azure subscription 1`
+  - Naziv subscription-a: `AZ305-Personal-Lab`
 
 - [x] Proveriti da privatni subscription nije povezan sa firminim tenant-om
   - Potvrđeno: prikazan je samo privatni `Default Directory` za ovaj lab
@@ -58,12 +58,14 @@ Primarni ciljevi:
 - [x] Kreirati Budget
 
 - [x] Postaviti okvirni mesečni budget
-  - Budget je podešen tokom inicijalnog setup-a privatnog Azure naloga
+  - Naziv: `az305-lab-budget`
+  - Iznos: `5 USD` mesečno
 
-- [ ] Postaviti upozorenja
-  - [ ] 50%
-  - [ ] 80%
-  - [ ] 100%
+- [x] Postaviti upozorenja
+  - [x] 50%
+  - [x] 80%
+  - [x] 100%
+  - Alert recipient: privatni Outlook nalog
 
 - [x] Proveriti gde se vidi trenutna potrošnja
 
@@ -79,7 +81,7 @@ Primarni ciljevi:
 - [x] Region:
   - `West Europe`
 
-- [ ] Razumeti odnos:
+- [x] Razumeti odnos:
   - Subscription
   - Resource Group
   - Resource
@@ -862,7 +864,7 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 ## Trenutno sam stigao do:
 
-`Privatni Azure nalog, tenant i subscription su provereni. Resource Group rg-az305-lab je kreiran; odlučeno je da glavni lab ide ka mikroservisnoj arhitekturi na Azure Container Apps.`
+`Privatni Azure nalog je otvoren, subscription AZ305-Personal-Lab i Cost Management/Budget su provereni i podešeni, a Resource Group rg-az305-lab je kreiran. Sekcije 1–4 su završene. Prethodni tok je bio zaustavljen pre App Service Plan-a; odlučeno je da se App Service Plan ne kreira i da glavni lab nastavi ka mikroservisnoj arhitekturi na Azure Container Apps.`
 
 ## Sledeći korak:
 
