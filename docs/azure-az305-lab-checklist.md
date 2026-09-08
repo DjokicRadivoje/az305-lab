@@ -41,31 +41,30 @@ Primarni ciljevi:
   - Zabeležiti naziv tenant-a:
     - `____________________________`
 
-- [ ] Proveriti Subscription
-  - Zabeležiti naziv subscription-a:
-    - `____________________________`
+- [x] Proveriti Subscription
+  - Naziv subscription-a: `Azure subscription 1`
 
 - [ ] Proveriti da privatni subscription nije povezan sa firminim tenant-om
 
-- [ ] Otvoriti Cost Management
-  - Proveriti trenutno stanje kredita
-  - Proveriti da nema neočekivanih troškova
+- [x] Otvoriti Cost Management
+  - [x] Proveriti trenutno stanje kredita
+  - [x] Proveriti da nema neočekivanih troškova
 
 ---
 
 ## 3. Kontrola troškova
 
-- [ ] Kreirati Budget
+- [x] Kreirati Budget
 
-- [ ] Postaviti okvirni mesečni budget
-  - Predlog: `5–10 €`
+- [x] Postaviti okvirni mesečni budget
+  - Budget je podešen tokom inicijalnog setup-a privatnog Azure naloga
 
 - [ ] Postaviti upozorenja
   - [ ] 50%
   - [ ] 80%
   - [ ] 100%
 
-- [ ] Proveriti gde se vidi trenutna potrošnja
+- [x] Proveriti gde se vidi trenutna potrošnja
 
 ---
 
@@ -83,6 +82,13 @@ Primarni ciljevi:
   - Subscription
   - Resource Group
   - Resource
+
+### Napomena o App Service Plan-u
+
+- Prethodni lab je bio zaustavljen neposredno pre kreiranja **App Service Plan-a**.
+- App Service Plan **nije kreiran**.
+- Pošto je praktični pravac promenjen ka **Azure Container Apps** i mikroservisnoj arhitekturi, App Service Plan se u ovom lab-u **neće kreirati**.
+- App Service i App Service Plan ostaju teme za AZ-305 poređenje i scenario pitanja.
 
 ---
 
@@ -724,8 +730,6 @@ Azure OpenAI
 
 ---
 
----
-
 ## 28. Napomena – šta ova checklista trenutno ne pokriva dovoljno od AZ-305 ispita
 
 Ovaj praktični lab pokriva veliki deo AZ-305 tema kroz stvarnu implementaciju, ali ne pokriva kompletan ispit. Sledeće oblasti treba dodatno obraditi kroz posebne scenarije, poređenja i teorijsku pripremu:
@@ -850,12 +854,11 @@ Pored praktičnog lab-a potrebno je dodatno raditi AZ-305 scenario pitanja gde j
 
 Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih je efikasnije obraditi kroz arhitektonske scenarije i poređenje Azure servisa.
 
-
 # Napredak
 
 ## Trenutno sam stigao do:
 
-`Privatni Azure nalog je otvoren i prijava na Azure Portal je potvrđena. Resource Group rg-az305-lab je kreiran; odlučeno je da glavni lab ide ka mikroservisnoj arhitekturi na Azure Container Apps.`
+`Privatni Azure nalog je otvoren, subscription i Cost Management/Budget su provereni/podešeni, a Resource Group rg-az305-lab je kreiran. Prethodni tok je bio zaustavljen pre App Service Plan-a; odlučeno je da se App Service Plan ne kreira i da glavni lab nastavi ka mikroservisnoj arhitekturi na Azure Container Apps.`
 
 ## Sledeći korak:
 
@@ -864,6 +867,7 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 ## Beleške
 
 - App Service je već praktično obrađen kroz poslovni projekat.
+- App Service Plan nije kreiran i nije potreban za Azure Container Apps tok.
 - U ovom lab-u App Service ostaje važan za poređenje i AZ-305 scenario pitanja.
 - Glavna compute platforma za praktični deo postaje Azure Container Apps.
 - Fokus nije samo polaganje ispita, već i postavljanje funkcionalnog sistema koji može kasnije da se proširuje.
