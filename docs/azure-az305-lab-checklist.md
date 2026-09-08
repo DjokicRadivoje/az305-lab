@@ -17,9 +17,9 @@ Primarni ciljevi:
 
 ## 1. Priprema naloga
 
-- [ ] Napraviti poseban browser profil za privatni Azure lab
-  - Predlog naziva: `Azure Personal`
-  - Ne koristiti isti profil kao za firmin Azure nalog
+- [x] Koristiti odvojenu browser sesiju za privatni Azure lab
+  - Koristi se **Private/Incognito** prozor umesto posebnog browser profila
+  - Ne koristiti istu aktivnu sesiju kao za firmin Azure nalog
 
 - [x] Izabrati privatni Microsoft nalog
   - Koristiti postojeći privatni Outlook/Hotmail nalog ili napraviti novi
@@ -37,14 +37,15 @@ Primarni ciljevi:
 
 - [x] Otvoriti Azure Portal
 
-- [ ] Proveriti Directory / Tenant
-  - Zabeležiti naziv tenant-a:
-    - `____________________________`
+- [x] Proveriti Directory / Tenant
+  - Directory / tenant: `Default Directory`
+  - Domain: `radivojedjokiccloudoutlook.onmicrosoft.com`
 
 - [x] Proveriti Subscription
   - Naziv subscription-a: `Azure subscription 1`
 
-- [ ] Proveriti da privatni subscription nije povezan sa firminim tenant-om
+- [x] Proveriti da privatni subscription nije povezan sa firminim tenant-om
+  - Potvrđeno: prikazan je samo privatni `Default Directory` za ovaj lab
 
 - [x] Otvoriti Cost Management
   - [x] Proveriti trenutno stanje kredita
@@ -730,6 +731,8 @@ Azure OpenAI
 
 ---
 
+---
+
 ## 28. Napomena – šta ova checklista trenutno ne pokriva dovoljno od AZ-305 ispita
 
 Ovaj praktični lab pokriva veliki deo AZ-305 tema kroz stvarnu implementaciju, ali ne pokriva kompletan ispit. Sledeće oblasti treba dodatno obraditi kroz posebne scenarije, poređenja i teorijsku pripremu:
@@ -854,11 +857,12 @@ Pored praktičnog lab-a potrebno je dodatno raditi AZ-305 scenario pitanja gde j
 
 Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih je efikasnije obraditi kroz arhitektonske scenarije i poređenje Azure servisa.
 
+
 # Napredak
 
 ## Trenutno sam stigao do:
 
-`Privatni Azure nalog je otvoren, subscription i Cost Management/Budget su provereni/podešeni, a Resource Group rg-az305-lab je kreiran. Prethodni tok je bio zaustavljen pre App Service Plan-a; odlučeno je da se App Service Plan ne kreira i da glavni lab nastavi ka mikroservisnoj arhitekturi na Azure Container Apps.`
+`Privatni Azure nalog, tenant i subscription su provereni. Resource Group rg-az305-lab je kreiran; odlučeno je da glavni lab ide ka mikroservisnoj arhitekturi na Azure Container Apps.`
 
 ## Sledeći korak:
 
