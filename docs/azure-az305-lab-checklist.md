@@ -21,12 +21,12 @@ Primarni ciljevi:
   - Predlog naziva: `Azure Personal`
   - Ne koristiti isti profil kao za firmin Azure nalog
 
-- [ ] Izabrati privatni Microsoft nalog
+- [x] Izabrati privatni Microsoft nalog
   - Koristiti postojeći privatni Outlook/Hotmail nalog ili napraviti novi
   - Ne koristiti firminu email adresu
   - Uključiti MFA
 
-- [ ] Otvoriti Azure Free Account
+- [x] Otvoriti Azure Free Account
   - Prijaviti se privatnim Microsoft nalogom
   - Završiti verifikaciju telefona i kartice
   - Proveriti da je aktiviran početni Azure kredit
@@ -35,7 +35,7 @@ Primarni ciljevi:
 
 ## 2. Provera Azure okruženja
 
-- [ ] Otvoriti Azure Portal
+- [x] Otvoriti Azure Portal
 
 - [ ] Proveriti Directory / Tenant
   - Zabeležiti naziv tenant-a:
@@ -724,6 +724,8 @@ Azure OpenAI
 
 ---
 
+---
+
 ## 28. Napomena – šta ova checklista trenutno ne pokriva dovoljno od AZ-305 ispita
 
 Ovaj praktični lab pokriva veliki deo AZ-305 tema kroz stvarnu implementaciju, ali ne pokriva kompletan ispit. Sledeće oblasti treba dodatno obraditi kroz posebne scenarije, poređenja i teorijsku pripremu:
@@ -848,11 +850,12 @@ Pored praktičnog lab-a potrebno je dodatno raditi AZ-305 scenario pitanja gde j
 
 Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih je efikasnije obraditi kroz arhitektonske scenarije i poređenje Azure servisa.
 
+
 # Napredak
 
 ## Trenutno sam stigao do:
 
-`Resource Group rg-az305-lab je kreiran; odlučeno je da glavni lab ide ka mikroservisnoj arhitekturi na Azure Container Apps.`
+`Privatni Azure nalog je otvoren i prijava na Azure Portal je potvrđena. Resource Group rg-az305-lab je kreiran; odlučeno je da glavni lab ide ka mikroservisnoj arhitekturi na Azure Container Apps.`
 
 ## Sledeći korak:
 
