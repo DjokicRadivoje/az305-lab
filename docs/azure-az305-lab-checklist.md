@@ -131,20 +131,31 @@ Primarni ciljevi:
 
 ## 6. Azure Container Registry (ACR)
 
-- [ ] Kreirati Azure Container Registry
+- [x] Kreirati Azure Container Registry
+  - Registry: `acraz305lab`
+  - Login server: `acraz305lab.azurecr.io`
+  - Region: `North Europe`
+  - Pricing plan: `Basic`
+  - Public network access: enabled za početni lab
+  - RBAC Registry Permissions
 
-- [ ] Razumeti:
+- [x] Razumeti:
   - Registry
   - Repository
   - Image
   - Tag
   - Digest
 
-- [ ] Push-ovati prvi image
+- [x] Push-ovati prvi image
+  - `acraz305lab.azurecr.io/az305-template-service-api:1.0`
 
-- [ ] Proveriti image u ACR-u
+- [x] Proveriti image u ACR-u
+  - Repository: `az305-template-service-api`
+  - Tag: `1.0`
+  - Digest potvrđen u ACR-u
 
-- [ ] Ne koristiti registry admin credentials ako nije potrebno
+- [x] Ne koristiti registry admin credentials ako nije potrebno
+  - Login urađen preko Azure CLI (`az acr login`)
 
 - [ ] Kasnije omogućiti pristup preko Managed Identity + `AcrPull`
 
@@ -739,8 +750,6 @@ Azure OpenAI
 
 ---
 
----
-
 ## 28. Napomena – šta ova checklista trenutno ne pokriva dovoljno od AZ-305 ispita
 
 Ovaj praktični lab pokriva veliki deo AZ-305 tema kroz stvarnu implementaciju, ali ne pokriva kompletan ispit. Sledeće oblasti treba dodatno obraditi kroz posebne scenarije, poređenja i teorijsku pripremu:
@@ -865,16 +874,15 @@ Pored praktičnog lab-a potrebno je dodatno raditi AZ-305 scenario pitanja gde j
 
 Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih je efikasnije obraditi kroz arhitektonske scenarije i poređenje Azure servisa.
 
-
 # Napredak
 
 ## Trenutno sam stigao do:
 
-`Sekcije 1–5 su završene. Privatni Azure nalog, tenant, subscription, Cost Management/Budget i Resource Group su podešeni. Očišćen .NET 10 Web API je prebačen na privatni GitHub, osnovne grane su napravljene, lokalni build/testovi i Swagger su provereni, dodat je Dockerfile, napravljen je lokalni image i API je uspešno pokrenut u Docker container-u.`
+`Sekcije 1–5 su završene. U sekciji 6 kreiran je Azure Container Registry acraz305lab u North Europe (Basic), uspešno je urađen Azure CLI login, lokalni image az305-template-service-api:1.0 je tagovan i push-ovan u ACR, a repository/tag/digest su provereni u Azure Portalu.`
 
 ## Sledeći korak:
 
-`Kreirati Azure Container Registry (ACR), zatim push-ovati prvi container image i proveriti ga u registry-ju.`
+`Kreirati Azure Container Apps Environment i povezati ga sa Log Analytics workspace-om; zatim kreirati prvi Container App koji će povući image iz ACR-a.`
 
 ## Beleške
 
@@ -882,6 +890,9 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 - App Service Plan nije kreiran i nije potreban za Azure Container Apps tok.
 - U ovom lab-u App Service ostaje važan za poređenje i AZ-305 scenario pitanja.
 - Glavna compute platforma za praktični deo postaje Azure Container Apps.
+- ACR je kreiran u `North Europe` zato što `West Europe` trenutno nije prihvatao nove ACR korisnike za ovaj subscription.
+- Za pristup ACR-u nije korišćen registry admin user; korišćen je Azure CLI login.
+- Managed Identity + `AcrPull` biće uvedeni kada Container App bude povlačio image.
 - Fokus nije samo polaganje ispita, već i postavljanje funkcionalnog sistema koji može kasnije da se proširuje.
 
 ---
