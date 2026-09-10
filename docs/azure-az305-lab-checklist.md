@@ -58,14 +58,16 @@ Primarni ciljevi:
 - [x] Kreirati Budget
 
 - [x] Postaviti okvirni mesečni budget
-  - Naziv: `az305-lab-budget`
+  - Naziv: `AZ305_Sept2026-Aug2028`
   - Iznos: `5 USD` mesečno
+  - Period: septembar 2026 – avgust 2028
 
 - [x] Postaviti upozorenja
+  - [x] 20%
   - [x] 50%
-  - [x] 80%
   - [x] 100%
-  - Alert recipient: privatni Outlook nalog
+  - [x] 150%
+  - Alert recipients: privatni email nalozi
 
 - [x] Proveriti gde se vidi trenutna potrošnja
 
