@@ -97,21 +97,21 @@ Primarni ciljevi:
 
 ## 5. GitHub i aplikacioni kod
 
-- [ ] Prebaciti demo / očišćenu verziju postojećeg `.NET 10 Web API` projekta na privatni GitHub nalog
+- [x] Prebaciti demo / očišćenu verziju postojećeg `.NET 10 Web API` projekta na privatni GitHub nalog
 
-- [ ] Proveriti da repo ne sadrži:
+- [x] Proveriti da repo ne sadrži:
   - secret-e
   - connection stringove
   - poslovne URL-ove
   - interne certifikate
   - produkcione podatke
 
-- [ ] Napraviti osnovne grane:
+- [x] Napraviti osnovne grane:
   - `develop`
   - `uat`
   - `main`
 
-- [ ] Proveriti lokalni build i testove
+- [x] Proveriti lokalni build i testove
 
 - [x] Proveriti Swagger / OpenAPI
 
@@ -868,11 +868,11 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 ## Trenutno sam stigao do:
 
-`Privatni Azure nalog je otvoren, subscription i Cost Management/Budget su provereni/podešeni, a Resource Group rg-az305-lab je kreiran. Prethodni tok je bio zaustavljen pre App Service Plan-a; odlučeno je da se App Service Plan ne kreira i da glavni lab nastavi ka mikroservisnoj arhitekturi na Azure Container Apps.`
+`Sekcije 1–5 su završene. Privatni Azure nalog, tenant, subscription, Cost Management/Budget i Resource Group su podešeni. Očišćen .NET 10 Web API je prebačen na privatni GitHub, osnovne grane su napravljene, lokalni build/testovi i Swagger su provereni, dodat je Dockerfile, napravljen je lokalni image i API je uspešno pokrenut u Docker container-u.`
 
 ## Sledeći korak:
 
-`Prebaciti očišćen .NET API na privatni GitHub repo, dodati Dockerfile i zatim kreirati Azure Container Registry.`
+`Kreirati Azure Container Registry (ACR), zatim push-ovati prvi container image i proveriti ga u registry-ju.`
 
 ## Beleške
 
