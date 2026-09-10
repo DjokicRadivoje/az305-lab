@@ -97,7 +97,7 @@ Primarni ciljevi:
 
 ## 5. GitHub i aplikacioni kod
 
-- [ ] Prebaciti demo / očišćenu verziju postojećeg `.NET 8 Web API` projekta na privatni GitHub nalog
+- [ ] Prebaciti demo / očišćenu verziju postojećeg `.NET 10 Web API` projekta na privatni GitHub nalog
 
 - [ ] Proveriti da repo ne sadrži:
   - secret-e
@@ -113,13 +113,17 @@ Primarni ciljevi:
 
 - [ ] Proveriti lokalni build i testove
 
-- [ ] Proveriti Swagger / OpenAPI
+- [x] Proveriti Swagger / OpenAPI
 
-- [ ] Dodati Dockerfile
+- [x] Dodati Dockerfile
 
-- [ ] Lokalno napraviti container image
+- [x] Lokalno napraviti container image
+  - Image: `az305-template-service-api:1.0`
 
-- [ ] Lokalno pokrenuti container i proveriti API
+- [x] Lokalno pokrenuti container i proveriti API
+  - Container: `az305-template-api`
+  - Lokalni port: `8080`
+  - Swagger potvrđen u `Development` okruženju
 
 ---
 
@@ -864,7 +868,7 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 ## Trenutno sam stigao do:
 
-`Privatni Azure nalog je otvoren, subscription AZ305-Personal-Lab i Cost Management/Budget su provereni i podešeni, a Resource Group rg-az305-lab je kreiran. Sekcije 1–4 su završene. Prethodni tok je bio zaustavljen pre App Service Plan-a; odlučeno je da se App Service Plan ne kreira i da glavni lab nastavi ka mikroservisnoj arhitekturi na Azure Container Apps.`
+`Privatni Azure nalog je otvoren, subscription i Cost Management/Budget su provereni/podešeni, a Resource Group rg-az305-lab je kreiran. Prethodni tok je bio zaustavljen pre App Service Plan-a; odlučeno je da se App Service Plan ne kreira i da glavni lab nastavi ka mikroservisnoj arhitekturi na Azure Container Apps.`
 
 ## Sledeći korak:
 
