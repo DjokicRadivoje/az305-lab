@@ -230,10 +230,10 @@ Primarni ciljevi:
 - [x] Pregledati logove
   - logovi su dostupni kroz Container Apps Environment / Log Analytics
 
-- [ ] Razumeti razliku:
-  - App Service
-  - App Service for Containers
-  - Azure Container Apps
+- [x] Razumeti razliku:
+  - **App Service** = PaaS za direktno hostovanje aplikacionog koda/runtime-a; koristi App Service Plan
+  - **App Service for Containers** = App Service model, ali kao deployment artifact koristi Docker/container image; i dalje koristi App Service Plan
+  - **Azure Container Apps** = container-native PaaS za mikroservise i event-driven workload-e; koristi Container Apps Environment, revisions, replicas, ingress i autoscaling/scale-to-zero; ne koristi App Service Plan
 
 ---
 
@@ -907,11 +907,11 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 ## Trenutno sam stigao do:
 
-`Sekcije 1–7 su završene. ACR acraz305lab u North Europe sadrži image az305-template-service-api:1.0. Kreiran je Container Apps Environment cae-az305-lab na Consumption workload profilu, povezan sa Log Analytics workspace-om i potvrđeni su logovi. Razjašnjeni su Environment, Container App, Revision, Replica, Ingress i Scaling koncepti. Kreiran je prvi Container App az305-template-api, image se povlači iz ACR-a preko Managed Identity + AcrPull, podešeni su 0.5 CPU / 1 GiB, target port 8080 i external HTTP ingress, a javni Swagger endpoint uspešno radi.`
+`Sekcije 1–7 su završene. U sekciji 8 prvi Azure Container App je uspešno podignut i javno dostupan. Razumljena je razlika između App Service, App Service for Containers i Azure Container Apps. Jedino je health endpoint ostavljen kao opcioni/proverni korak. Sledeća velika praktična tema je revision management i traffic splitting.`
 
 ## Sledeći korak:
 
-`Dovršiti sekciju 8 proverom/dodavanjem health endpoint-a i poređenjem App Service / App Service for Containers / Azure Container Apps. Nakon toga preći na revision management i traffic splitting.`
+`Posle kratke obnove, proveriti/dodati health endpoint ako želimo da zatvorimo i poslednju otvorenu podstavku sekcije 8, zatim preći na sekciju 10: nova revision, multiple revisions mode, traffic splitting, canary/blue-green i rollback.`
 
 ## Beleške
 
@@ -923,8 +923,113 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 - Za pristup ACR-u nije korišćen registry admin user; prvo je korišćen Azure CLI login, a Container Apps sada koristi Managed Identity + `AcrPull`.
 - Container App koristi external ingress i javni HTTPS endpoint; interni servisi će kasnije koristiti internal ingress ili rad bez ingress-a, zavisno od namene.
 - `minReplicas = 0` omogućava scale-to-zero u Consumption modelu.
-- Cost Management trenutno pokazuje mali trošak; planirano je da se narednog dana ponovo proveri realan trošak ACR-a, Container Apps-a i Log Analytics-a.
+- Cost Management trenutno pokazuje mali trošak; dogovoreno je da se nakon jednog dana proveri realan trošak ACR-a, Container Apps-a i Log Analytics-a.
 - Fokus nije samo polaganje ispita, već i postavljanje funkcionalnog sistema koji može kasnije da se proširuje.
+
+---
+
+# Azure objekti kreirani do ove tačke
+
+- **Subscription:** `AZ305-Personal-Lab`
+- **Glavni Resource Group:** `rg-az305-lab`
+  - region RG-a: `West Europe`
+- **Dodatni Resource Group:** `DefaultResourceGroup-NEU`
+  - region: `North Europe`
+  - trenutno prazan
+  - pojavio se automatski tokom rada u North Europe; tačno poreklo nije potvrđeno i nema funkcionalnu ulogu u trenutnom lab-u
+- **Azure Container Registry:** `acraz305lab`
+  - region: `North Europe`
+  - SKU: `Basic`
+  - login server: `acraz305lab.azurecr.io`
+  - repository: `az305-template-service-api`
+  - tag: `1.0`
+- **Azure Container Apps Environment:** `cae-az305-lab`
+  - region: `North Europe`
+  - workload profile: `Consumption`
+  - system-assigned Managed Identity
+  - `AcrPull` pristup prema `acraz305lab`
+- **Log Analytics Workspace:** automatski kreiran uz Container Apps Environment
+  - koristi se za Container Apps logove
+  - potvrđeno da logovi stižu i vide se u Azure Portalu
+- **Container App:** `az305-template-api`
+  - image: `acraz305lab.azurecr.io/az305-template-service-api:1.0`
+  - CPU: `0.5`
+  - memorija: `1 GiB`
+  - target port: `8080`
+  - external HTTP ingress
+  - javni HTTPS endpoint i Swagger rade
+  - `ASPNETCORE_ENVIRONMENT=Development` za trenutni lab
+  - `minReplicas = 0`
+- **Budget:** `AZ305_Sept2026-Aug2028`
+  - `5 USD` mesečno
+  - upozorenja: 20%, 50%, 100%, 150%
+
+---
+
+# Podsetnik / obnova posle odmora
+
+Planirana pauza: oko **9 dana**. Pre nastavka ne kretati odmah na novu temu; prvo uraditi kratku obnovu da se ponovo uspostavi ceo mentalni model.
+
+## Brza obnova – 15 do 30 minuta
+
+1. Otvoriti `rg-az305-lab` i pregledati resurse koji postoje.
+2. Proveriti Cost Analysis i koliko su do tada koštali ACR, Container Apps i Log Analytics.
+3. Ponoviti Docker tok:
+
+```text
+Dockerfile
+  -> docker build
+  -> image
+  -> docker tag
+  -> docker push
+  -> ACR
+  -> Container App pull
+  -> replica
+```
+
+4. Ponoviti ACR pojmove:
+   - Registry
+   - Repository
+   - Image
+   - Tag
+   - Digest
+5. Ponoviti Container Apps hijerarhiju:
+
+```text
+Container Apps Environment
+└── Container App
+    └── Revision
+        └── 0..N Replica
+```
+
+6. Ponoviti:
+   - external ingress = javni pristup
+   - internal ingress = pristup unutar Container Apps Environment-a
+   - no ingress = npr. worker koji ne prima HTTP zahteve
+   - scaling = promena broja replica
+   - `minReplicas = 0` = scale-to-zero
+7. Otvoriti javni Swagger `az305-template-api` i potvrditi da aplikacija i dalje radi.
+8. Ponoviti razliku:
+   - App Service
+   - App Service for Containers
+   - Azure Container Apps
+9. Podsetiti se bezbednosnog toka:
+   - ACR admin credentials nisu korišćeni
+   - Managed Identity + `AcrPull` omogućava Container Apps platformi da povuče image
+10. Tek nakon obnove nastaviti sa **revision management + traffic splitting**.
+
+## Mini pitanja za povratak u temu
+
+- Koja je razlika između image-a i container-a?
+- Zašto ACR nije runtime servis?
+- Šta je digest i po čemu se razlikuje od taga?
+- Šta je Container Apps Environment, a šta Container App?
+- Šta je Revision, a šta Replica?
+- Kada koristiti external, internal ili bez ingress-a?
+- Kako scale-to-zero utiče na broj replica i trošak?
+- Zašto Container App i dalje treba pristup ACR-u?
+- Koja je razlika između App Service for Containers i Azure Container Apps?
+- Kako bi izgledao javni API + interni API + worker u istom Environment-u?
 
 ---
 
