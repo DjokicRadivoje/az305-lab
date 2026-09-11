@@ -911,7 +911,7 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 ## Sledeći korak:
 
-`Posle kratke obnove, proveriti/dodati health endpoint ako želimo da zatvorimo i poslednju otvorenu podstavku sekcije 8, zatim preći na sekciju 10: nova revision, multiple revisions mode, traffic splitting, canary/blue-green i rollback.`
+`Po povratku sa odmora prva tačka je ponovno kreiranje Azure Container Registry-ja acraz305lab ako je pre odmora obrisan radi uštede troška. Zatim ponovo build/tag/push image-a az305-template-service-api:1.0 i provera Managed Identity + AcrPull veze. Posle kratke obnove nastaviti sa health endpoint-om po potrebi i sekcijom 10: revision management, multiple revisions mode, traffic splitting, canary/blue-green i rollback.`
 
 ## Beleške
 
@@ -924,6 +924,7 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 - Container App koristi external ingress i javni HTTPS endpoint; interni servisi će kasnije koristiti internal ingress ili rad bez ingress-a, zavisno od namene.
 - `minReplicas = 0` omogućava scale-to-zero u Consumption modelu.
 - Cost Management trenutno pokazuje mali trošak; dogovoreno je da se nakon jednog dana proveri realan trošak ACR-a, Container Apps-a i Log Analytics-a.
+- ACR može biti obrisan pre odmora radi izbegavanja baseline troška. Source code i Dockerfile ostaju u GitHub-u, pa se image može ponovo izgraditi i push-ovati po povratku.
 - Fokus nije samo polaganje ispita, već i postavljanje funkcionalnog sistema koji može kasnije da se proširuje.
 
 ---
@@ -943,6 +944,7 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
   - login server: `acraz305lab.azurecr.io`
   - repository: `az305-template-service-api`
   - tag: `1.0`
+  - napomena: može biti obrisan pre odmora radi uštede; po povratku je njegovo ponovno kreiranje prva tačka
 - **Azure Container Apps Environment:** `cae-az305-lab`
   - region: `North Europe`
   - workload profile: `Consumption`
@@ -970,11 +972,21 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 Planirana pauza: oko **9 dana**. Pre nastavka ne kretati odmah na novu temu; prvo uraditi kratku obnovu da se ponovo uspostavi ceo mentalni model.
 
+## Prva tačka po povratku
+
+1. **Ponovo kreirati Azure Container Registry `acraz305lab`** ako je pre odmora obrisan radi uštede troška.
+   - Region: `North Europe`
+   - SKU: `Basic`
+   - Public network access: enabled za početni lab
+   - Registry permissions: RBAC
+   - zatim ponovo uraditi build/tag/push image-a `az305-template-service-api:1.0`
+   - proveriti da Container Apps Environment Managed Identity ponovo ima potreban `AcrPull` pristup
+
 ## Brza obnova – 15 do 30 minuta
 
-1. Otvoriti `rg-az305-lab` i pregledati resurse koji postoje.
-2. Proveriti Cost Analysis i koliko su do tada koštali ACR, Container Apps i Log Analytics.
-3. Ponoviti Docker tok:
+2. Otvoriti `rg-az305-lab` i pregledati resurse koji postoje.
+3. Proveriti Cost Analysis i koliko su do tada koštali ACR, Container Apps i Log Analytics.
+4. Ponoviti Docker tok:
 
 ```text
 Dockerfile
@@ -987,13 +999,13 @@ Dockerfile
   -> replica
 ```
 
-4. Ponoviti ACR pojmove:
+5. Ponoviti ACR pojmove:
    - Registry
    - Repository
    - Image
    - Tag
    - Digest
-5. Ponoviti Container Apps hijerarhiju:
+6. Ponoviti Container Apps hijerarhiju:
 
 ```text
 Container Apps Environment
@@ -1002,21 +1014,21 @@ Container Apps Environment
         └── 0..N Replica
 ```
 
-6. Ponoviti:
+7. Ponoviti:
    - external ingress = javni pristup
    - internal ingress = pristup unutar Container Apps Environment-a
    - no ingress = npr. worker koji ne prima HTTP zahteve
    - scaling = promena broja replica
    - `minReplicas = 0` = scale-to-zero
-7. Otvoriti javni Swagger `az305-template-api` i potvrditi da aplikacija i dalje radi.
-8. Ponoviti razliku:
+8. Otvoriti javni Swagger `az305-template-api` i potvrditi da aplikacija i dalje radi.
+9. Ponoviti razliku:
    - App Service
    - App Service for Containers
    - Azure Container Apps
-9. Podsetiti se bezbednosnog toka:
+10. Podsetiti se bezbednosnog toka:
    - ACR admin credentials nisu korišćeni
    - Managed Identity + `AcrPull` omogućava Container Apps platformi da povuče image
-10. Tek nakon obnove nastaviti sa **revision management + traffic splitting**.
+11. Tek nakon obnove nastaviti sa **revision management + traffic splitting**.
 
 ## Mini pitanja za povratak u temu
 
