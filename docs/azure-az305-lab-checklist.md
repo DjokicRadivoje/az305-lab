@@ -157,17 +157,23 @@ Primarni ciljevi:
 - [x] Ne koristiti registry admin credentials ako nije potrebno
   - Login urađen preko Azure CLI (`az acr login`)
 
-- [ ] Kasnije omogućiti pristup preko Managed Identity + `AcrPull`
+- [x] Omogućiti pristup preko Managed Identity + `AcrPull`
+  - Container Apps Environment koristi system-assigned Managed Identity
+  - Identity je dobio `AcrPull` nad registry-jem `acraz305lab`
+  - Image je uspešno povučen bez registry admin username/password-a
 
 ---
 
 ## 7. Azure Container Apps Environment
 
-- [ ] Kreirati Azure Container Apps Environment
+- [x] Kreirati Azure Container Apps Environment
+  - Environment: `cae-az305-lab`
+  - Region: `North Europe`
+  - Workload profile: `Consumption`
 
-- [ ] Razumeti da Container Apps ne koristi App Service Plan
+- [x] Razumeti da Container Apps ne koristi App Service Plan
 
-- [ ] Pregledati:
+- [x] Pregledati:
   - Environment
   - Container App
   - Revision
@@ -175,31 +181,54 @@ Primarni ciljevi:
   - Ingress
   - Scaling
 
-- [ ] Povezati Log Analytics workspace
+- [x] Povezati Log Analytics workspace
+  - Workspace kreiran zajedno sa Container Apps Environment-om
+  - Potvrđeno da se logovi vide u Azure Portalu
 
-- [ ] Razumeti odnos:
-  - Container Apps Environment
-  - više Container App mikroservisa unutar environment-a
+- [x] Razumeti odnos:
+  - Container Apps Environment predstavlja zajedničko okruženje za više Container App resursa
+  - jedan Environment može sadržati više mikroservisa / Container App aplikacija
+  - trenutno `cae-az305-lab` sadrži `az305-template-api`
+
+### Koncepti potvrđeni u praksi
+
+- **Revision** = verzija konfiguracije/deployment-a jednog Container App-a
+- **Replica** = konkretna pokrenuta instanca određene revision verzije
+- **Ingress** = kontroliše kako saobraćaj ulazi u Container App
+  - external ingress za javno dostupne API-je
+  - internal ingress za servise dostupne samo unutar Container Apps Environment-a
+  - worker može raditi bez ingress-a
+- **Scaling** = automatsko povećavanje/smanjivanje broja replica; kod Consumption modela moguće je `minReplicas = 0` i scale-to-zero
 
 ---
 
 ## 8. Prvi Azure Container App
 
-- [ ] Kreirati prvi Container App za API
+- [x] Kreirati prvi Container App za API
+  - Container App: `az305-template-api`
 
-- [ ] Povući image iz ACR-a
+- [x] Povući image iz ACR-a
+  - Registry: `acraz305lab.azurecr.io`
+  - Repository/image: `az305-template-service-api`
+  - Tag: `1.0`
+  - pristup preko Managed Identity + `AcrPull`
 
-- [ ] Podesiti:
-  - CPU
-  - Memory
-  - target port
-  - external ingress
+- [x] Podesiti:
+  - CPU: `0.5`
+  - Memory: `1 GiB`
+  - target port: `8080`
+  - external ingress: enabled / accepting traffic from anywhere
+  - `ASPNETCORE_ENVIRONMENT=Development` radi Swagger-a u lab okruženju
 
-- [ ] Proveriti javni endpoint
+- [x] Proveriti javni endpoint
+  - javni HTTPS endpoint radi
 
 - [ ] Proveriti Swagger / health endpoint
+  - [x] Swagger javno dostupan i potvrđen
+  - [ ] Health endpoint proveriti / dodati ako je potrebno
 
-- [ ] Pregledati logove
+- [x] Pregledati logove
+  - logovi su dostupni kroz Container Apps Environment / Log Analytics
 
 - [ ] Razumeti razliku:
   - App Service
@@ -878,11 +907,11 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 
 ## Trenutno sam stigao do:
 
-`Sekcije 1–5 su završene. U sekciji 6 kreiran je Azure Container Registry acraz305lab u North Europe (Basic), uspešno je urađen Azure CLI login, lokalni image az305-template-service-api:1.0 je tagovan i push-ovan u ACR, a repository/tag/digest su provereni u Azure Portalu.`
+`Sekcije 1–7 su završene. ACR acraz305lab u North Europe sadrži image az305-template-service-api:1.0. Kreiran je Container Apps Environment cae-az305-lab na Consumption workload profilu, povezan sa Log Analytics workspace-om i potvrđeni su logovi. Razjašnjeni su Environment, Container App, Revision, Replica, Ingress i Scaling koncepti. Kreiran je prvi Container App az305-template-api, image se povlači iz ACR-a preko Managed Identity + AcrPull, podešeni su 0.5 CPU / 1 GiB, target port 8080 i external HTTP ingress, a javni Swagger endpoint uspešno radi.`
 
 ## Sledeći korak:
 
-`Kreirati Azure Container Apps Environment i povezati ga sa Log Analytics workspace-om; zatim kreirati prvi Container App koji će povući image iz ACR-a.`
+`Dovršiti sekciju 8 proverom/dodavanjem health endpoint-a i poređenjem App Service / App Service for Containers / Azure Container Apps. Nakon toga preći na revision management i traffic splitting.`
 
 ## Beleške
 
@@ -891,8 +920,10 @@ Ove oblasti ne treba nužno sve implementirati u privatnom Azure lab-u. Deo njih
 - U ovom lab-u App Service ostaje važan za poređenje i AZ-305 scenario pitanja.
 - Glavna compute platforma za praktični deo postaje Azure Container Apps.
 - ACR je kreiran u `North Europe` zato što `West Europe` trenutno nije prihvatao nove ACR korisnike za ovaj subscription.
-- Za pristup ACR-u nije korišćen registry admin user; korišćen je Azure CLI login.
-- Managed Identity + `AcrPull` biće uvedeni kada Container App bude povlačio image.
+- Za pristup ACR-u nije korišćen registry admin user; prvo je korišćen Azure CLI login, a Container Apps sada koristi Managed Identity + `AcrPull`.
+- Container App koristi external ingress i javni HTTPS endpoint; interni servisi će kasnije koristiti internal ingress ili rad bez ingress-a, zavisno od namene.
+- `minReplicas = 0` omogućava scale-to-zero u Consumption modelu.
+- Cost Management trenutno pokazuje mali trošak; planirano je da se narednog dana ponovo proveri realan trošak ACR-a, Container Apps-a i Log Analytics-a.
 - Fokus nije samo polaganje ispita, već i postavljanje funkcionalnog sistema koji može kasnije da se proširuje.
 
 ---
